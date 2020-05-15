@@ -222,38 +222,20 @@ func (t *Handler) setConstrainsByProfile(childNamespace string, sliceCopy *apps_
 	switch sliceCopy.Spec.Profile {
 	case "Low":
 		// Set the timeout which is 6 weeks for medium profile slices
-		if sliceCopy.Status.Renew || sliceCopy.Status.Expires == nil {
-			sliceCopy.Status.Expires = &metav1.Time{
-				Time: time.Now().Add(1344 * time.Hour),
-			}
-		} else {
-			sliceCopy.Status.Expires = &metav1.Time{
-				Time: sliceCopy.CreationTimestamp.Add(1344 * time.Hour),
-			}
+		sliceCopy.Status.Expires = &metav1.Time{
+			Time: time.Now().Add(1344 * time.Hour),
 		}
 		t.clientset.CoreV1().ResourceQuotas(childNamespace).Create(t.lowResourceQuota)
 	case "Medium":
 		// Set the timeout which is 4 weeks for medium profile slices
-		if sliceCopy.Status.Renew || sliceCopy.Status.Expires == nil {
-			sliceCopy.Status.Expires = &metav1.Time{
-				Time: time.Now().Add(672 * time.Hour),
-			}
-		} else {
-			sliceCopy.Status.Expires = &metav1.Time{
-				Time: sliceCopy.CreationTimestamp.Add(672 * time.Hour),
-			}
+		sliceCopy.Status.Expires = &metav1.Time{
+			Time: time.Now().Add(672 * time.Hour),
 		}
 		t.clientset.CoreV1().ResourceQuotas(childNamespace).Create(t.medResourceQuota)
 	case "High":
 		// Set the timeout which is 2 weeks for high profile slices
-		if sliceCopy.Status.Renew || sliceCopy.Status.Expires == nil {
-			sliceCopy.Status.Expires = &metav1.Time{
-				Time: time.Now().Add(336 * time.Hour),
-			}
-		} else {
-			sliceCopy.Status.Expires = &metav1.Time{
-				Time: sliceCopy.CreationTimestamp.Add(336 * time.Hour),
-			}
+		sliceCopy.Status.Expires = &metav1.Time{
+			Time: time.Now().Add(336 * time.Hour),
 		}
 		t.clientset.CoreV1().ResourceQuotas(childNamespace).Create(t.highResourceQuota)
 	}
