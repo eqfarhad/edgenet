@@ -548,3 +548,57 @@ type TotalResourceQuotaList struct {
 
 	Items []TotalResourceQuota `json:"items"`
 }
+
+// +genclient
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// Permission describes a Permission resource
+type Permission struct {
+	// TypeMeta is the metadata for the resource, like kind and apiversion
+	meta_v1.TypeMeta `json:",inline"`
+	// ObjectMeta contains the metadata for the particular object, including
+	meta_v1.ObjectMeta `json:"metadata,omitempty"`
+
+	// Spec is the permission resource spec
+	Spec PermissionSpec `json:"spec"`
+	// Status is the permission resource status
+	Status PermissionStatus `json:"status,omitempty"`
+}
+
+// PermissionSpec is the spec for a Permission resource
+type PermissionSpec struct {
+	Username string `json:"username"`
+	Rights   Rights `json:"rights"`
+	Enabled  bool   `json:"enabled"`
+}
+
+type Rights struct {
+	Restricted []Restricted `json:"restricted"`
+	Boundless  []Boundless  `json:"boundless"`
+}
+
+type Restricted struct {
+	Resource string `json:"Resource"`
+}
+
+type Boundless struct {
+	Resource string   `json:"Resource"`
+	Name     string   `json:"name"`
+	Verbs    []string `json:"verbs"`
+}
+
+// PermissionStatus is the status for a permission
+type PermissionStatus struct {
+	State   string   `json:"state"`
+	Message []string `json:"message"`
+}
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// PermissionList is a list of Permission resources
+type PermissionList struct {
+	meta_v1.TypeMeta `json:",inline"`
+	meta_v1.ListMeta `json:"metadata"`
+
+	Items []Permission `json:"items"`
+}

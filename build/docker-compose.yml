@@ -137,3 +137,15 @@ services:
       - ../config/:/root/config/
       - ../assets/kubeconfigs:/root/assets/kubeconfigs
       - ../assets/templates/:/root/assets/templates/
+   edgenet-permission:
+     container_name: edgenet-permission
+     restart: always
+     build:
+       context: ../
+       dockerfile: ./build/permission/Dockerfile
+     image: edgenet-permission:v1.0.0
+     volumes:
+       - ~/.kube/:/root/.kube/
+       - ../config/:/root/config/
+       - ../assets/kubeconfigs:/root/assets/kubeconfigs
+       - ../assets/templates/:/root/assets/templates/

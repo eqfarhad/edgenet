@@ -28,6 +28,8 @@ type EmailVerificationExpansion interface{}
 
 type NodeContributionExpansion interface{}
 
+type PermissionExpansion interface{}
+
 type SelectiveDeploymentExpansion interface{}
 
 type SliceExpansion interface{}

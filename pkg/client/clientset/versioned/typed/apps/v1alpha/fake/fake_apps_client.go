@@ -49,6 +49,10 @@ func (c *FakeAppsV1alpha) NodeContributions(namespace string) v1alpha.NodeContri
 	return &FakeNodeContributions{c, namespace}
 }
 
+func (c *FakeAppsV1alpha) Permissions(namespace string) v1alpha.PermissionInterface {
+	return &FakePermissions{c, namespace}
+}
+
 func (c *FakeAppsV1alpha) SelectiveDeployments(namespace string) v1alpha.SelectiveDeploymentInterface {
 	return &FakeSelectiveDeployments{c, namespace}
 }

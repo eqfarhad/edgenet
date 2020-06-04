@@ -33,6 +33,7 @@ type AppsV1alphaInterface interface {
 	AuthorityRequestsGetter
 	EmailVerificationsGetter
 	NodeContributionsGetter
+	PermissionsGetter
 	SelectiveDeploymentsGetter
 	SlicesGetter
 	TeamsGetter
@@ -64,6 +65,10 @@ func (c *AppsV1alphaClient) EmailVerifications(namespace string) EmailVerificati
 
 func (c *AppsV1alphaClient) NodeContributions(namespace string) NodeContributionInterface {
 	return newNodeContributions(c, namespace)
+}
+
+func (c *AppsV1alphaClient) Permissions(namespace string) PermissionInterface {
+	return newPermissions(c, namespace)
 }
 
 func (c *AppsV1alphaClient) SelectiveDeployments(namespace string) SelectiveDeploymentInterface {

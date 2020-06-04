@@ -34,6 +34,8 @@ type Interface interface {
 	EmailVerifications() EmailVerificationInformer
 	// NodeContributions returns a NodeContributionInformer.
 	NodeContributions() NodeContributionInformer
+	// Permissions returns a PermissionInformer.
+	Permissions() PermissionInformer
 	// SelectiveDeployments returns a SelectiveDeploymentInformer.
 	SelectiveDeployments() SelectiveDeploymentInformer
 	// Slices returns a SliceInformer.
@@ -82,6 +84,11 @@ func (v *version) EmailVerifications() EmailVerificationInformer {
 // NodeContributions returns a NodeContributionInformer.
 func (v *version) NodeContributions() NodeContributionInformer {
 	return &nodeContributionInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+}
+
+// Permissions returns a PermissionInformer.
+func (v *version) Permissions() PermissionInformer {
+	return &permissionInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }
 
 // SelectiveDeployments returns a SelectiveDeploymentInformer.

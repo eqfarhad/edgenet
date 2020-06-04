@@ -1,0 +1,114 @@
+# Copyright 2019 Sorbonne Université
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: permissions.apps.edgenet.io
+spec:
+  group: apps.edgenet.io
+  # list of versions supported by this CustomResourceDefinition
+  versions:
+    - name: v1alpha
+      # Each version can be enabled/disabled by Served flag.
+      served: true
+      # One and only one version must be marked as the storage version.
+      storage: true
+      subresources:
+        status: {}
+      additionalPrinterColumns:
+        - name: Status
+          type: string
+          jsonPath: .status.state
+        - name: Age
+          type: date
+          jsonPath: .metadata.creationTimestamp
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              required:
+                - username
+                - rights
+                - enabled
+              properties:
+                username:
+                  type: string
+                rights:
+                  type: object
+                  required:
+                    - restricted
+                    - boundless
+                  properties:
+                    restricted:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                          - resource
+                        properties:
+                          resource:
+                            type: string
+                            enum:
+                              - Authority
+                              - TotalResouceQuota
+                    boundless:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                          - resource
+                          - verbs
+                        properties:
+                          resource:
+                            type: string
+                            enum:
+                              - Team
+                              - Slice
+                              - NodeContribution
+                              - User
+                              - UserRegistrationRequest
+                              - Permission
+                              - AcceptableUsePolicy
+                          name:
+                            type: string
+                            description: Name of the resource object
+                          verbs:
+                            type: array
+                            items:
+                              type: string
+                              enum:
+                                - Create
+                                - Read
+                                - Update
+                                - Delete
+                              minimum: 1
+                enabled:
+                  type: boolean
+            status:
+              type: object
+              properties:
+                state:
+                  type: string
+                message:
+                  type: array
+                  nullable: true
+                  items:
+                    type: string
+  scope: Cluster
+  names:
+    plural: permissions
+    singular: permission
+    kind: Permission

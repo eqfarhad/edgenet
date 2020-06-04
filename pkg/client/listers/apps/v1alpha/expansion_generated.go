@@ -50,6 +50,14 @@ type NodeContributionListerExpansion interface{}
 // NodeContributionNamespaceLister.
 type NodeContributionNamespaceListerExpansion interface{}
 
+// PermissionListerExpansion allows custom methods to be added to
+// PermissionLister.
+type PermissionListerExpansion interface{}
+
+// PermissionNamespaceListerExpansion allows custom methods to be added to
+// PermissionNamespaceLister.
+type PermissionNamespaceListerExpansion interface{}
+
 // SelectiveDeploymentListerExpansion allows custom methods to be added to
 // SelectiveDeploymentLister.
 type SelectiveDeploymentListerExpansion interface{}
